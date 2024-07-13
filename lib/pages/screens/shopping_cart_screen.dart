@@ -50,18 +50,20 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: 2,
+                  itemCount: cart.items.length,
                   itemBuilder: (context, index) {
                     return CartItemCardWidget(
-                      image: 'assets/images/tote_bag_1.png',
-                      label: 'Floral Tote Bag',
+                      image: cart.items.values.toList()[index].image,
+                      label: cart.items.values.toList()[index].label,
                       subtext: 'Off-white',
                       size: 'M',
-                      price: '2,500.00',
+                      price: cart.items.values.toList()[index].price.toString(),
                       onTap: () {},
-                      quantity: '1',
+                      quantity:
+                          cart.items.values.toList()[index].quantity.toString(),
                       onMinusPressed: () {},
                       onAddPressed: () {},
+                      id: cart.items.values.toList()[index].id,
                     );
                   },
                 ),
@@ -74,7 +76,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Cart totals',
                           style: TextStyle(
                             fontSize: 16,
@@ -82,10 +84,10 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                             color: AppColors.textGrey,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Text(
                           'N ${cart.totalAmount.toStringAsFixed(2)}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                             color: AppColors.primaryColor,

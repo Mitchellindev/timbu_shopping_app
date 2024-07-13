@@ -69,9 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 10,
                       ),
-                      itemCount: 10,
+                      itemCount: 12,
                       itemBuilder: (BuildContext context, int index) {
-                        final product = data['items'][index];
+                        final Map<String, dynamic> product =
+                            data['items'][index];
 
                         return ProductCardWidget(
                           image:
@@ -81,8 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           label: product['name'],
                           onTap: () {
                             Provider.of<Cart>(context, listen: false).addItem(
-                              product,
-                              product['current_price'][0]['NGN'][0].toString(2),
+                              product['id'],
+                              product['current_price'][0]['NGN'][0],
                               product['name'],
                               'https://api.timbu.cloud/images/${product['photos'][0]['url']}',
                             );

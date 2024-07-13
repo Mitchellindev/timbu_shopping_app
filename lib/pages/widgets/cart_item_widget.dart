@@ -13,8 +13,9 @@ class CartItemCardWidget extends StatelessWidget {
     required this.quantity,
     required this.onMinusPressed,
     required this.onAddPressed,
+    required this.id,
   });
-
+  final String id;
   final String label;
   final String price;
   final String image;
