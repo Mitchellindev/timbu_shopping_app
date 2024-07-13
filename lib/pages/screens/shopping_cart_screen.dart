@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_3/cart_provider.dart';
 import 'package:task_3/config/router/route.dart';
 import 'package:task_3/core/constants/app_color.dart';
 import 'package:task_3/pages/widgets/cart_item_widget.dart';
 
-class ShoppingCartScreen extends StatelessWidget {
+class ShoppingCartScreen extends StatefulWidget {
   const ShoppingCartScreen({super.key});
 
   @override
+  State<ShoppingCartScreen> createState() => _ShoppingCartScreenState();
+}
+
+class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
+  @override
   Widget build(BuildContext context) {
+    final cart = Provider.of<Cart>(context);
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -40,23 +48,30 @@ class ShoppingCartScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CartItemCardWidget(
-                image: 'assets/images/tote_bag_1.png',
-                label: 'Floral Tote Bag',
-                subtext: 'Off-white',
-                size: 'M',
-                price: '2,500.00',
-                onTap: () {},
-                quantity: '1',
-                onMinusPressed: () {},
-                onAddPressed: () {},
+              Expanded(
+                child: ListView.builder(
+                  itemCount: 2,
+                  itemBuilder: (context, index) {
+                    return CartItemCardWidget(
+                      image: 'assets/images/tote_bag_1.png',
+                      label: 'Floral Tote Bag',
+                      subtext: 'Off-white',
+                      size: 'M',
+                      price: '2,500.00',
+                      onTap: () {},
+                      quantity: '1',
+                      onMinusPressed: () {},
+                      onAddPressed: () {},
+                    );
+                  },
+                ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 11),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -69,7 +84,7 @@ class ShoppingCartScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          '\$10,700.00',
+                          'N ${cart.totalAmount.toStringAsFixed(2)}',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w700,

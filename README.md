@@ -1,16 +1,38 @@
-# task_3
+# Shopping App
 
-A new Flutter project.
+This Flutter application is a simple shopping app that demonstrates basic functionalities like product listing, adding items to a cart, and placing an order. The app utilizes the BLoC pattern for state management.
 
 ## Getting Started
+- Clone the repository
+- Install dependencies
+- Run the app
 
-This project is a starting point for a Flutter application.
+## Features
+- Displays a list of products.
+- Adds products to a shopping cart.
+- Shows cart contents and total price.
+- Allows users to place an order (currently simulated).
 
-A few resources to get you started if this is your first Flutter project:
+## Structure
+lib: Contains the Dart code for the application.
+models: Contains the Product model.
+screens: Contains the app's screens.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Dependencies
+flutter_dotenv
+http
+intl
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Usage
+Tap "Add to Cart" on a product to add it to the cart.
+View cart contents and total price on the Checkout screen.
+Tap "Checkout" to simulate order placement.
+
+## Future Improvements
+Add user authentication.
+Implement product search and filtering.
+
+## Contributions
+Contributions are welcome! Feel free to open issues or pull requests.
+
+

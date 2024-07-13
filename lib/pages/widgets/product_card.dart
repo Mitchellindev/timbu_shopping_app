@@ -23,7 +23,7 @@ class ProductCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: AssetImage(image),
+          image: NetworkImage(image),
           fit: BoxFit.cover,
         ),
       ),
@@ -54,8 +54,8 @@ class ProductCardWidget extends StatelessWidget {
                         child: Text(
                           label,
                           style: const TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 10,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 8,
                           ),
                         ),
                       ),

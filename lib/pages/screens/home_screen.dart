@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_3/api/timbu_api_service.dart';
+import 'package:task_3/cart_provider.dart';
 import 'package:task_3/config/router/route.dart';
 import 'package:task_3/pages/widgets/product_card.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           'Shop',
           style: TextStyle(
@@ -38,27 +47,58 @@ class HomeScreen extends StatelessWidget {
             left: 24,
             right: 24,
           ),
-          child: Column(
-            children: [
-              Expanded(
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                  ),
-                  itemCount: 10,
-                  itemBuilder: (BuildContext context, int index) {
-                    return ProductCardWidget(
-                      image: 'assets/images/tote_bag_2.png',
-                      price: '4,800',
-                      label: 'Men\'s 100% Cutton T-Shirt',
-                      onTap: () {},
-                    );
-                  },
-                ),
-              )
-            ],
+          child: FutureBuilder(
+            future: getProducts(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                    child: CircularProgressIndicator.adaptive());
+              }
+              if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              }
+              final data = snapshot.data!;
+
+              return Column(
+                children: [
+                  Expanded(
+                    child: GridView.builder(
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                      ),
+                      itemCount: 10,
+                      itemBuilder: (BuildContext context, int index) {
+                        final product = data['items'][index];
+
+                        return ProductCardWidget(
+                          image:
+                              'https://api.timbu.cloud/images/${product['photos'][0]['url']}',
+                          price:
+                              '${product['current_price'][0]['NGN'][0].toStringAsFixed(2)}',
+                          label: product['name'],
+                          onTap: () {
+                            Provider.of<Cart>(context, listen: false).addItem(
+                              product,
+                              product['current_price'][0]['NGN'][0].toString(2),
+                              product['name'],
+                              'https://api.timbu.cloud/images/${product['photos'][0]['url']}',
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Added to cart'),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  )
+                ],
+              );
+            },
           ),
         ),
       ),
